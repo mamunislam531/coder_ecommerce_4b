@@ -8,6 +8,7 @@ class GetProductController {
   Future<List> getProduct() async {
     try {
       Uri uri = Uri.parse("https://eplay.coderangon.com/api/products");
+      // Uri uri = Uri.parse("https://eplay.coderangon.com/api/products/category/2");
       var res = await http.get(uri);
 
       if (res.statusCode == 200) {

@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:coder_ecommerce/controller/auth/login.dart';
+import 'package:coder_ecommerce/view/product/ui.dart';
 import 'package:coder_ecommerce/widgets/button.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/loading_button.dart';
@@ -63,9 +66,13 @@ class _LoginState extends State<Login> {
                     }
                     isLoading = true;
                     setState(() {});
-                    await LoginController.login(phone: phoneC.text, pass: passC.text);
+                    var status = await LoginController.login(phone: phoneC.text, pass: passC.text);
+                    log("========${status}===");
                     isLoading = false;
                     setState(() {});
+                    if (status) {
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (c) => ProductScreen()));
+                    }
                   },
                 ),
         ],
