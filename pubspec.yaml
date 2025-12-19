@@ -37,4 +37,9 @@ flutter:
 
   assets:
     - asset/images/
-    - asset/icons/
+
+
+  fonts:
+    - family: myfont
+      fonts:
+        - asset: asset/font/Nosifer-Regular.ttf

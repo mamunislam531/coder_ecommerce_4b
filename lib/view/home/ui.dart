@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomText(text: "Categories", color: Colors.black),
+                CustomText(text: "Categories", color: Colors.black,),
                 SizedBox(height: 15),
                 SizedBox(
                   height: 110,
