@@ -42,8 +42,8 @@ class ProductCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     spacing: 10,
                     children: [
-                      CustomText(text: data['price'], fW: FontWeight.w500, fSize: 14, color: Colors.black),
-                      CustomText(text: data['old_price'], fW: FontWeight.w500, fSize: 14, tD: TextDecoration.lineThrough),
+                      CustomText(text: "${data['price']}", fW: FontWeight.w500, fSize: 14, color: Colors.black),
+                      CustomText(text: "${data['old_price']}", fW: FontWeight.w500, fSize: 14, tD: TextDecoration.lineThrough),
                     ],
                   ),
                   InkWell(

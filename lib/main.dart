@@ -1,4 +1,5 @@
 import 'package:coder_ecommerce/view/auth/ui.dart';
+import 'package:coder_ecommerce/view/home/ui.dart';
 import 'package:coder_ecommerce/view/splash/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       builder: EasyLoading.init(),
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: HomeScreen(),
     );
   }
 }
