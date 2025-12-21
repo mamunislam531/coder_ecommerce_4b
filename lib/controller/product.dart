@@ -5,12 +5,20 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 
 class GetProductController {
-  Future<List> getProduct() async {
+  Future<List> getProduct({required String t}) async {
     try {
-      Uri uri = Uri.parse("https://eplay.coderangon.com/api/products");
-      // Uri uri = Uri.parse("https://eplay.coderangon.com/api/products/category/2");
+      log("=============APIIIIIIIIIIII : ${t}");
+      Uri uri;
+      if (t == "hot-selling") {
+        uri = Uri.parse("https://eplay.coderangon.com/api/products");
+      } else if (t == "search") {
+        uri = Uri.parse("https://eplay.coderangon.com/api/products/search");
+      } else if (t == "latest") {
+        uri = Uri.parse("https://eplay.coderangon.com/api/products/latests");
+      } else {
+        uri = Uri.parse("https://eplay.coderangon.com/api/products/category/$t");
+      }
       var res = await http.get(uri);
-
       if (res.statusCode == 200) {
         var jsonData = jsonDecode(res.body);
         return jsonData['data'];

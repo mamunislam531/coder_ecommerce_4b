@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:coder_ecommerce/controller/auth/login.dart';
+import 'package:coder_ecommerce/view/home/ui.dart';
 import 'package:coder_ecommerce/view/product/ui.dart';
 import 'package:coder_ecommerce/widgets/button.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,7 @@ class _LoginState extends State<Login> {
                     isLoading = false;
                     setState(() {});
                     if (status) {
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (c) => ProductScreen()));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (c) => HomeScreen()));
                     }
                   },
                 ),

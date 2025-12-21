@@ -17,7 +17,7 @@ class CustomText extends StatelessWidget {
       style: TextStyle(
         color: color ?? Colors.grey,
         fontSize: fSize ?? 15,
-        fontFamily: "myfont",
+        // fontFamily: "myfont",
         fontWeight: fW ?? FontWeight.normal,
         decoration: tD ?? TextDecoration.none,
       ),
