@@ -1,6 +1,7 @@
 import 'package:coder_ecommerce/view/auth/ui.dart';
 import 'package:coder_ecommerce/view/checkout/ui.dart';
 import 'package:coder_ecommerce/view/home/ui.dart';
+import 'package:coder_ecommerce/view/order/ui.dart';
 import 'package:coder_ecommerce/view/profile/ui.dart';
 import 'package:coder_ecommerce/view/shipping_info/ui.dart';
 import 'package:coder_ecommerce/view/splash/ui.dart';
@@ -16,10 +17,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      builder: EasyLoading.init(),
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
-    );
+    return MaterialApp(builder: EasyLoading.init(), debugShowCheckedModeBanner: false, home: OrderScreen());
   }
 }

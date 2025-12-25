@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
-
+import 'package:coder_ecommerce/controller/checkout.dart';
+import 'package:coder_ecommerce/view/home/ui.dart';
 import 'package:coder_ecommerce/view/shipping_info/ui.dart';
 import 'package:coder_ecommerce/widgets/button.dart';
 import 'package:coder_ecommerce/widgets/text.dart';
@@ -8,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  const CheckoutScreen({super.key});
+  const CheckoutScreen({super.key, required this.productData});
+  final Map productData;
 
   @override
   State<CheckoutScreen> createState() => _CheckoutScreenState();
@@ -16,21 +18,29 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   Map userData = {};
+  Map product = {};
 
   getUserData() async {
     FlutterSecureStorage storage = FlutterSecureStorage();
     var d = await storage.read(key: "shipping");
     log("======D : $d");
-   if(d != null){
-     userData = jsonDecode(d);
-     log("======userData : ${userData['name']}");
-   }
+    if (d != null) {
+      userData = jsonDecode(d);
+      log("======userData : ${userData['name']}");
+    }
+    setState(() {});
+  }
+
+  getProductData() async {
+    product = widget.productData;
+    log("==PPP : ${product}");
     setState(() {});
   }
 
   @override
   void initState() {
     getUserData();
+    getProductData();
     super.initState();
   }
 
@@ -59,7 +69,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             userData.isEmpty
                 ? InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ShippingScreen())).then((b){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ShippingScreen())).then((b) {
                         getUserData();
                       });
                     },
@@ -143,9 +153,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.fill,
-                        image: NetworkImage(
-                          "https://eplay.coderangon.com/storage/products/PgrKShWTkVMoWefUTr0YxLWiyRRrAXbl3joQrLXe.webp",
-                        ),
+                        image: NetworkImage("https://eplay.coderangon.com/storage/${product['image']}"),
                       ),
                     ),
                   ),
@@ -153,13 +161,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomText(text: "Men's Classic Cotton Head Cap"),
-                        CustomText(text: "brand : "),
+                        CustomText(text: "${product['title']}"),
+                        CustomText(text: "brand : ${product['brand']}"),
                         Row(
                           spacing: 10,
                           children: [
-                            CustomText(text: "BDT 500", fSize: 16),
-                            CustomText(text: "600", tD: TextDecoration.lineThrough),
+                            CustomText(text: "BDT ${product['price']}", fSize: 16),
+                            CustomText(text: " ${product['old_price']}", tD: TextDecoration.lineThrough),
                           ],
                         ),
                       ],
@@ -169,7 +177,25 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ),
             ),
             Spacer(),
-            CustomButton(title: "Checkout", onTap: () {}),
+            CustomButton(
+              title: "Checkout",
+              onTap: () async {
+                var checkout = {
+                  "customer_name": userData['name'],
+                  "customer_phone": userData['phone'],
+                  "payment_method": "cod",
+                  "items": [
+                    {"product_id": product['id'], "product_name": product['title'], "price": product['price'], "quantity": 1},
+                  ],
+                  "address": {"street": userData['street'], "upazila": userData['upazila'], "district": userData['district']},
+                };
+                log("========Check : ${jsonEncode(checkout)}=====");
+                bool status = await CheckOutService().sentData(data: checkout);
+                if (status == true) {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                }
+              },
+            ),
           ],
         ),
       ),

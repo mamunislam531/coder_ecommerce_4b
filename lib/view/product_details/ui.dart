@@ -111,7 +111,16 @@ class _ProductDetailsState extends State<ProductDetails> {
         child: CustomButton(
           title: "Buy Now",
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => CheckoutScreen()));
+            log("===== DA :$data");
+            Map pData = {
+              "id": data['id'],
+              "title": data['title'],
+              "brand": data['brand'],
+              "price": data['price'],
+              "old_price": data['old_price'],
+              "image": data['image'],
+            };
+            Navigator.push(context, MaterialPageRoute(builder: (context) => CheckoutScreen(productData: pData)));
           },
         ),
       ),
